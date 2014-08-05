@@ -33,31 +33,43 @@ void Player::update(ActionList _actionList)
 
 	
 	// Move right
-	if (_actionList.checkAction('r') && xVelocity < 6) {
-		direction = 1;
-		tileChunk.left = 0;
-		myTexture.loadFromImage(spriteSheet, tileChunk);
-		xVelocity++;
+	if (_actionList.checkAction('r')) {
+		if (!_actionList.checkAction('~')) {
+			direction = 1;
+			tileChunk.left = 0;
+			myTexture.loadFromImage(spriteSheet, tileChunk);
+		}
+		if (xVelocity < 6)
+			xVelocity++;
 	}
 	else if (xVelocity > 0 && !(_actionList.checkAction('l') || _actionList.checkAction('r')))
 		xVelocity -= xVelocity/3;
 
 	// Move left
-	if (_actionList.checkAction('l') && xVelocity > -6) {
-		direction = -1;
-		tileChunk.left = 32;
-		myTexture.loadFromImage(spriteSheet, tileChunk);
-		xVelocity--;
+	if (_actionList.checkAction('l')) {
+		if (!_actionList.checkAction('~')) {
+			direction = -1;
+			tileChunk.left = 32;
+			myTexture.loadFromImage(spriteSheet, tileChunk);
+		}
+		if (xVelocity > -6)
+			xVelocity--;
 	}
 	else if (xVelocity < 0 && !(_actionList.checkAction('l') || _actionList.checkAction('r')))
 		xVelocity -= xVelocity/3;
 
 	// Jump
 	if (_actionList.checkAction(' ') && onGround && yVelocity >= 0) {
-		yVelocity = -8;
-		onGround = false;
-		tileChunk.top = 32;
-		myTexture.loadFromImage(spriteSheet, tileChunk);
+		if (_actionList.checkAction('d')) {
+			yVelocity = 6;
+			onGround = false;
+		}
+		else {
+			yVelocity = -8;
+			onGround = false;
+			tileChunk.top = 32;
+			myTexture.loadFromImage(spriteSheet, tileChunk);
+		}
 	} else if (_actionList.checkAction(' ') && !onGround && yVelocity < -6) {
 		gravity = 0.12;
 	}

@@ -25,6 +25,8 @@ void GameScreen::getInput(sf::RenderWindow& window)
 		myActionList.appendAction('l');
 	if (KEY_RIGHT)
 		myActionList.appendAction('r');
+	if (KEY_DOWN)
+		myActionList.appendAction('d');
 	if (KEY_SPACE)
 		myActionList.appendAction(' ');
 	if (KEY_CONTROL && ! player1.isShootBullet())

@@ -23,12 +23,12 @@ Player::Player(void)
 
 void Player::update(ActionList _actionList)
 {
-	if (!canShootBullet && cooldownClock.getElapsedTime().asSeconds() > 0.2) {
+	if (!canShootBullet && cooldownClock.getElapsedTime().asSeconds() > 0.1) {
 		canShootBullet = true;
 		cooldownClock.restart();
 	}
 	bool onGround = false;
-	if (GameScreen::gameMap->getMapPos((x/32), ((y+5)/32)) == 1 && GameScreen::gameMap->getMapPos((x/32), ((y-5)/32)) == 0)
+	if ((GameScreen::gameMap->getMapPos(((x+3)/32), ((y)/32)) == 1 || GameScreen::gameMap->getMapPos(((x-13)/32), ((y)/32)) == 1) && (y-1)/32 != (y+1)/32)
 		onGround = true;
 
 	
@@ -61,7 +61,7 @@ void Player::update(ActionList _actionList)
 	// Jump
 	if (_actionList.checkAction(' ') && onGround && yVelocity >= 0) {
 		if (_actionList.checkAction('d')) {
-			yVelocity = 6;
+			yVelocity = 9;
 			onGround = false;
 		}
 		else {
@@ -79,6 +79,10 @@ void Player::update(ActionList _actionList)
 		shootBullet = true;
 		canShootBullet = false;
 		cooldownClock.restart();
+		if (direction == 1)
+			x -= 4;
+		if (direction == -1)
+			x += 4;
 	}
 
 	// Gravity
@@ -87,7 +91,7 @@ void Player::update(ActionList _actionList)
 		gravity = 1;
 	} else if (onGround && yVelocity > 0){
 		yVelocity = 0;
-		if (GameScreen::gameMap->getMapPos((x/32), ((y)/32)) == 1 && (int)y % 32 != 0) {
+		if (GameScreen::gameMap->getMapPos((x/32), ((y)/32)) == 1 && (int)y % 32 != 0 && (int)y % 32 < 9) {
 			y -= ((int)y % 32);
 		}
 		else if ((int)y % 32 != 0)

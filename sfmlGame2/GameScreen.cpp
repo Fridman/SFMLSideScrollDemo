@@ -40,7 +40,7 @@ void GameScreen::update()
 	if (player1.isShootBullet()) {
 		for (int i = 0; i < 32; i++) {
 			if (!projectileList[i].getInUse()) {
-				projectileList[i].activate(player1.get_x()+(16 * player1.getDirection()), player1.get_y()-13, player1.getDirection());
+				projectileList[i].activate(player1.get_x()+(16 * player1.getDirection()), player1.get_y()-12 + ((rand() % 5) - 3), player1.getDirection());
 				break;
 			}
 		}

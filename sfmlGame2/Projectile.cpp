@@ -25,7 +25,7 @@ void Projectile::update(ActionList _actionList)
 		x += 16*direction;
 	}
 	mySprite.setPosition(x, y);
-	if (lifeClock.getElapsedTime().asSeconds() > 5)
+	if (lifeClock.getElapsedTime().asSeconds() > 3)
 		inUse = false;
 }
 

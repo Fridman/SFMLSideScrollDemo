@@ -29,8 +29,6 @@ private:
 	sf::Sprite mySprite;
 	sf::Rect<int> tileChunk;
 	sf::Image spriteSheet;
-	sf::Texture paintTexture;
-	sf::Sprite paintSprite;
 };
 
 

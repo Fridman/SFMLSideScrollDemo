@@ -24,4 +24,5 @@ public:
 private:
 	sf::Font _font;
 	sf::Text MenuMessage;
+	sf::View screenView;
 };

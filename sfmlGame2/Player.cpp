@@ -144,4 +144,4 @@ Player::~Player(void)
 {
 }
 
-
+/* Note to self: Implement a player manager class */

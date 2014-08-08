@@ -70,6 +70,7 @@
   <ItemGroup>
     <ClCompile Include="ActionList.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
@@ -84,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="ActionList.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
@@ -93,6 +95,9 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="SplashScreen.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

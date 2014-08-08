@@ -29,4 +29,5 @@ private:
 	ActionList myActionList;
 	Player player1;
 	Projectile projectileList[32];
+	sf::View screenView;
 };

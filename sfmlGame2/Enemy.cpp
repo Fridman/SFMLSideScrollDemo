@@ -7,8 +7,8 @@ Enemy::Enemy(void)
 	cooldownClock.restart();
 	gravity = 1;
 	direction = 1;
-	x = 100;
-	y = 100;
+	x = -100;
+	y = -100;
 	xVelocity = 0;
 	yVelocity = 0;
 	spriteSheet.loadFromFile("images/entities/Enemy1.png");

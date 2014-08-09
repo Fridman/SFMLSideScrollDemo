@@ -15,11 +15,13 @@ GameScreen::GameScreen(void)
 {
 	GameScreen::gameMap = new Map();
 	screenView.reset(sf::FloatRect(0, 0, Game::window_x, Game::window_y));
+	_enemyManager = EnemyManager(&player1);
 	player1.setPosition(100,100);
 	gameMap->loadMap("level1.txt");
 	gameMap->drawMap();
+	_enemyManager.activate(200, 100);
 	for (int i = 0; i < 32; i++) {
-		projectileList[i] = Projectile();
+		projectileList[i] = Projectile(&_enemyManager);
 	}
 }
 
@@ -65,6 +67,7 @@ void GameScreen::update()
 		}
 	}
 	player1.clearShootBullet();
+	_enemyManager.update();
 	if (player1.dead)
 		Game::screen = std::make_shared<MenuScreen>();
 }
@@ -89,6 +92,9 @@ void GameScreen::render(sf::RenderWindow& window)
 	for (int i = 0; i < 32; i++) {
 		if (projectileList[i].getInUse()) {
 			window.draw(projectileList[i].getSprite());
+		}
+		if (_enemyManager.getEnemy(i)->isActivated()) {
+			window.draw(_enemyManager.getEnemy(i)->getSprite());
 		}
 	}
 }

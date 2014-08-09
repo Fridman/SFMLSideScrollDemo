@@ -19,6 +19,7 @@
 #define KEY_SPACE (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 #define KEY_CONTROL ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)))
 #define KEY_ENTER (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+#define IS_BETWEEN(a, b, c) (a > b && a < c)
 
 
 class Game

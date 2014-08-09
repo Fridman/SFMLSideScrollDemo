@@ -5,6 +5,7 @@
 #include "Screen.h"
 #include "Player.h"
 #include "Map.h"
+#include "EnemyManager.h"
 #include "Projectile.h"
 
 /*	Game screen implements the screen abstract class. The idea is to create 
@@ -23,6 +24,7 @@ public:
 	void render(sf::RenderWindow& window) override;
 	~GameScreen(void);
 	
+	EnemyManager _enemyManager;
 	static Map * gameMap;
 
 private:
@@ -30,4 +32,5 @@ private:
 	Player player1;
 	Projectile projectileList[32];
 	sf::View screenView;
+	
 };

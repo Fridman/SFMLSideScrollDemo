@@ -7,13 +7,20 @@ public:
 	Enemy(void);
 	void update(ActionList _actionList) override;
 	sf::Sprite getSprite() override;
-	void setPosition(float _x, float _y);
+	void activate(float _x, float _y);
+	void hit(int i);
+	bool isActivated();
+	bool checkJump();
+	bool checkLanding();
+	int direction;
 	float get_x();
 	float get_y();
 	~Enemy(void);
 private:
+	bool hitCheck;
+	bool activated;
+	int healthPoints;
 	float gravity;
-	int direction;
 	float x, y;
 	float xVelocity;
 	float yVelocity;

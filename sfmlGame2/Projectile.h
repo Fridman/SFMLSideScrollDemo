@@ -1,10 +1,15 @@
 #pragma once
+#include "Game.h"
 #include "entity.h"
+#include "EnemyManager.h"
+#include "Enemy.h"
+
 class Projectile :
 	public Entity
 {
 public:
 	Projectile(void);
+	Projectile(EnemyManager * _enemyList);
 	sf::Sprite getSprite() override;
 	void update(ActionList _actionList) override;
 	void activate(float _x, float _y, int _direction);
@@ -13,6 +18,7 @@ public:
 	~Projectile(void);
 
 private:
+	EnemyManager * enemyList;
 	bool reversed;
 	sf::Clock lifeClock;
 	sf::Image loadImage;

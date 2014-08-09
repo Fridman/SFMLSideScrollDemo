@@ -1,8 +1,23 @@
 #include "Projectile.h"
+#include "GameScreen.h"
 
-
-Projectile::Projectile(void)
+Projectile::Projectile()
 {
+	lifeClock.restart();
+	loadImage.loadFromFile("images/entities/bullet.png");
+	myTexture.loadFromImage(loadImage);
+	mySprite.setTexture(myTexture);
+	mySprite.setColor(sf::Color::Yellow);
+	mySprite.setOrigin(16,8);
+	x = 0;
+	y = 0;
+	inUse = false;
+	reversed = false;
+}
+
+Projectile::Projectile(EnemyManager * _enemyList)
+{
+	enemyList = _enemyList;
 	lifeClock.restart();
 	loadImage.loadFromFile("images/entities/bullet.png");
 	myTexture.loadFromImage(loadImage);
@@ -25,6 +40,12 @@ void Projectile::update(ActionList _actionList)
 		x += 16*direction;
 	}
 	mySprite.setPosition(x, y);
+	for (int i = 0; i < 32; i++) {
+		if (IS_BETWEEN(x, enemyList->getEnemy(i)->get_x()-13, enemyList->getEnemy(i)->get_x()+13) && IS_BETWEEN(y, enemyList->getEnemy(i)->get_y()-16, enemyList->getEnemy(i)->get_y()+16)) {
+			enemyList->getEnemy(i)->hit(1);
+			inUse = false;
+		}
+	}
 	if (lifeClock.getElapsedTime().asSeconds() > 3)
 		inUse = false;
 }

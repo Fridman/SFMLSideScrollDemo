@@ -55,10 +55,10 @@ void Game::run()
 			render(window);
 
 		}
-		else {
+		/* else {
 			sf::Time sleeptime = sf::Time(sf::seconds(((1/fpsMax) - elapsed.asSeconds())*0.5));
 			sf::sleep(sleeptime);
-		}
+		}*/
 	}
 }
 

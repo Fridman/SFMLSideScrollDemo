@@ -15,6 +15,7 @@ public:
 	float get_x();
 	float get_y();
 	float getDirection();
+	bool dead;
 	~Player(void);
 private:
 	bool shootBullet;

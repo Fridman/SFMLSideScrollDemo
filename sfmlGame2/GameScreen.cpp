@@ -65,6 +65,8 @@ void GameScreen::update()
 		}
 	}
 	player1.clearShootBullet();
+	if (player1.dead)
+		Game::screen = std::make_shared<MenuScreen>();
 }
 
 void GameScreen::render(sf::RenderWindow& window)

@@ -12,6 +12,7 @@ public:
 	int getMapPos(int _x, int _y);
 	~Map(void);
 private:
+	short bottom;
 	int map[64][64];
 	sf::RenderTexture myTexture;
 	sf::Sprite mySprite;

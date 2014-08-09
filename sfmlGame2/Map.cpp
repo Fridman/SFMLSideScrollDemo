@@ -4,9 +4,13 @@
 
 Map::Map(void)
 {
+	bottom = 20;
 	for (int k = 0; k < 64; k++) {
 		for (int i = 0; i < 64; i++) {
 			map[i][k] = 0;
+			if (k > bottom) {
+				map[i][k] = -1;
+			}
 		}
 	}
 	myTexture.create(2048, 2048);

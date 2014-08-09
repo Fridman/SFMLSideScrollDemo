@@ -5,6 +5,7 @@
 
 Player::Player(void)
 {
+	dead = false;
 	cooldownClock.restart();
 	shootBullet = false;
 	canShootBullet = true;
@@ -28,7 +29,7 @@ void Player::update(ActionList _actionList)
 		cooldownClock.restart();
 	}
 	bool onGround = false;
-	if ((GameScreen::gameMap->getMapPos(((x+3)/32), ((y)/32)) == 1 || GameScreen::gameMap->getMapPos(((x-13)/32), ((y)/32)) == 1) && (y-1)/32 != (y+1)/32)
+	if ((GameScreen::gameMap->getMapPos(((x+13)/32), ((y+16)/32)) == 1 || GameScreen::gameMap->getMapPos(((x-13)/32), ((y+16)/32)) == 1) && (((int)y-5)/32 != ((int)y+5)/32))
 		onGround = true;
 
 	
@@ -98,6 +99,8 @@ void Player::update(ActionList _actionList)
 			y += (32 - ((int)y % 32));
 		tileChunk.top = 0;
 		myTexture.loadFromImage(spriteSheet, tileChunk);
+	} if (GameScreen::gameMap->getMapPos(((x)/32), ((y)/32)) == -1) {
+		dead = true;
 	}
 	
 	x += xVelocity;

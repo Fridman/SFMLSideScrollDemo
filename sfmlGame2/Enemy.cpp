@@ -95,13 +95,18 @@ void Enemy::update(ActionList _actionList)
 		if (healthPoints <= 0) {
 			activated = false;
 		}
+		if (GameScreen::gameMap->getMapPos(((x)/32), ((y)/32)) == -1) {
+			activated = false;
+		}
 		
 		if (!hitCheck)
 			mySprite.setColor(sf::Color::White);
 		if (hitCheck)
 			hitCheck = false;
 
-	} else {
+	} 
+	if (!activated) {
+		printf("ouch I'm dead!\n");
 		x = -1000;
 		y = -1000;
 	}

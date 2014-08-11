@@ -1,4 +1,5 @@
 #include "EnemyManager.h"
+#include "GameScreen.h"
 
 
 EnemyManager::EnemyManager(void)

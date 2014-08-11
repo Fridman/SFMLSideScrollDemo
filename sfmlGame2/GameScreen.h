@@ -28,6 +28,7 @@ public:
 	static Map * gameMap;
 
 private:
+	sf::Clock spawnTimer;
 	ActionList myActionList;
 	Player player1;
 	Projectile projectileList[32];

@@ -14,6 +14,7 @@ GameScreen::GameScreen(void)
 	// Constructor loads the map information from a text document an prepares the gameplay objects.
 {
 	GameScreen::gameMap = new Map();
+	spawnTimer.restart();
 	screenView.reset(sf::FloatRect(0, 0, Game::window_x, Game::window_y));
 	_enemyManager = EnemyManager(&player1);
 	player1.setPosition(100,100);
@@ -67,6 +68,11 @@ void GameScreen::update()
 		}
 	}
 	player1.clearShootBullet();
+	if (spawnTimer.getElapsedTime().asSeconds() > 10) {
+		_enemyManager.activate(rand() % 2048, 16);
+		printf("spawning dude!\n");
+		spawnTimer.restart();
+	}
 	_enemyManager.update();
 	if (player1.dead)
 		Game::screen = std::make_shared<MenuScreen>();

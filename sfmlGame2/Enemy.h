@@ -4,6 +4,10 @@ class Enemy :
 	public Entity
 {
 public:
+	bool unactivate;
+	void deactivate();
+	bool newActions;
+	ActionList myActionList;
 	Enemy(void);
 	void update(ActionList _actionList) override;
 	sf::Sprite getSprite() override;
@@ -17,6 +21,7 @@ public:
 	float get_y();
 	~Enemy(void);
 private:
+	sf::Texture textureStorage[4];
 	bool hitCheck;
 	bool activated;
 	int healthPoints;

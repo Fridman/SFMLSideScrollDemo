@@ -15,8 +15,9 @@ public:
 	~EnemyManager(void);
 
 private:
+	void unactivate(int i);
 	void aiRoutine(Enemy * _enemy);
-
+	int iUpdate;
 	Player * player1;
 	ActionList myActionList;
 	Enemy _enemies[32];

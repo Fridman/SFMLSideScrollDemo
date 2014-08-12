@@ -47,7 +47,7 @@ void Game::run()
 
 		}
 		elapsed = clock2.getElapsedTime();
-		if (elapsed.asSeconds() >= (1/fpsMax)) {
+		if (elapsed.asSeconds() >= (/*1/fpsMax*/ 0/02)) {
 			//Set up FPS counter.
 			//Lock render speed.	
 			fps = float(1)/elapsed.asSeconds();

@@ -8,6 +8,7 @@ ActionList::ActionList()
 }
 
 void ActionList::appendAction(char _action)
+	// Adds actions to the list for the game entities to do.
 {
 	for (int i = 0; i < 16; i++)
 		if (list[i] == '`') {
@@ -17,6 +18,7 @@ void ActionList::appendAction(char _action)
 }
 
 bool ActionList::checkAction(char _action)
+	// Checks whether the action exists within the list or not.
 {
 	for (int i = 0; i < 16; i++)
 		if (list[i] == _action)
@@ -25,6 +27,7 @@ bool ActionList::checkAction(char _action)
 }
 
 void ActionList::clearActions()
+	// Clears the list of all actions.
 {
 	for (int i = 0; i < 16; i++)
 		if (list[i] != '`')

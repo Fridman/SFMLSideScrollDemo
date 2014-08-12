@@ -4,6 +4,7 @@
 
 Enemy::Enemy(void)
 {
+	unactivate = false;
 	hitCheck = false;
 	activated = false;
 	gravity = 1;
@@ -28,8 +29,7 @@ void Enemy::update(ActionList _actionList)
 		if (_actionList.checkAction('r')) {
 			if (!_actionList.checkAction('~')) {
 				direction = 1;
-				tileChunk.left = 0;
-				myTexture.loadFromImage(spriteSheet, tileChunk);
+				myTexture = textureStorage[0];
 			}
 			if (xVelocity < 6)
 				xVelocity++;
@@ -41,8 +41,7 @@ void Enemy::update(ActionList _actionList)
 		if (_actionList.checkAction('l')) {
 			if (!_actionList.checkAction('~')) {
 				direction = -1;
-				tileChunk.left = 32;
-				myTexture.loadFromImage(spriteSheet, tileChunk);
+				myTexture = textureStorage[1];
 			}
 			if (xVelocity > -6)
 				xVelocity--;
@@ -59,8 +58,7 @@ void Enemy::update(ActionList _actionList)
 			else {
 				yVelocity = -8;
 				onGround = false;
-				tileChunk.top = 32;
-				myTexture.loadFromImage(spriteSheet, tileChunk);
+				myTexture = textureStorage[0];
 			}
 		} else if (_actionList.checkAction(' ') && !onGround && yVelocity < -6) {
 			gravity = 0.12;
@@ -79,6 +77,10 @@ void Enemy::update(ActionList _actionList)
 
 		// Gravity
 		if (!onGround && yVelocity < 9) {
+			if (direction == 1)
+				myTexture = textureStorage[2];
+			if (direction == -1)
+				myTexture = textureStorage[3];
 			yVelocity += gravity;
 			gravity = 1;
 		} else if (onGround && yVelocity > 0){
@@ -88,15 +90,13 @@ void Enemy::update(ActionList _actionList)
 			}
 			else if ((int)y % 32 != 0)
 				y += (32 - ((int)y % 32));
-			tileChunk.top = 0;
-			myTexture.loadFromImage(spriteSheet, tileChunk);
 		}
 
 		if (healthPoints <= 0) {
-			activated = false;
+			unactivate = true;;
 		}
 		if (GameScreen::gameMap->getMapPos(((x)/32), ((y)/32)) == -1) {
-			activated = false;
+			unactivate = true;;
 		}
 		
 		if (!hitCheck)
@@ -106,7 +106,6 @@ void Enemy::update(ActionList _actionList)
 
 	} 
 	if (!activated) {
-		printf("ouch I'm dead!\n");
 		x = -1000;
 		y = -1000;
 	}
@@ -126,7 +125,16 @@ void Enemy::activate(float _x, float _y)
 	cooldownClock.restart();
 	spriteSheet.loadFromFile("images/entities/Enemy1.png");
 	tileChunk = sf::Rect<int>(0,0,32,32);
-	myTexture.loadFromImage(spriteSheet, tileChunk);
+	textureStorage[0].loadFromImage(spriteSheet, tileChunk);
+	tileChunk.left = 32;			
+	textureStorage[1].loadFromImage(spriteSheet, tileChunk);
+	tileChunk.left = 0;
+	tileChunk.top = 32;		
+	textureStorage[2].loadFromImage(spriteSheet, tileChunk);
+	tileChunk.left = 32;
+	tileChunk.top = 32;		
+	textureStorage[3].loadFromImage(spriteSheet, tileChunk);
+	myTexture = textureStorage[0];
 	mySprite.setTexture(myTexture);
 	mySprite.setOrigin(16,32);
 	activated = true;
@@ -136,20 +144,29 @@ void Enemy::activate(float _x, float _y)
 }
 
 float Enemy::get_x()
+	// Returns the x-coordinate.
 {
 	return x;
 }
 
 float Enemy::get_y()
+	// Returns the y-coordinate.
 {
 	return y;
 }
 
 bool Enemy::isActivated() {
+	// Returns whether the enemy has been activated or not.
 	return activated;
 }
 
+void Enemy::deactivate() {
+	// Returns whether the enemy has been activated or not.
+	activated = false;
+}
+
 void Enemy::hit(int i)
+	// Updates the enemy logic for recieving damage.
 {
 	hitCheck = true;
 	healthPoints -= i;
@@ -157,11 +174,13 @@ void Enemy::hit(int i)
 }
 
 bool Enemy::checkJump()
+	// Returns whether the enemy is at the edge of a platform. This is used in the EnemyManager::aiRoutine function.
 {
 	return GameScreen::gameMap->getMapPos(((int)x/32)+direction, ((int)y/32)) == 0;
 }
 
 bool Enemy::checkLanding()
+	// Checks whether there is a platform below the enemy. This is used in the EnemyManager::aiRoutine function.
 {
 	return GameScreen::gameMap->getMapPos(((int)x/32), ((int)y/32)+1) == 1 ||
 		GameScreen::gameMap->getMapPos(((int)x/32), ((int)y/32)+2) == 1 ||

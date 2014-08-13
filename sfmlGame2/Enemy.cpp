@@ -4,6 +4,9 @@
 
 Enemy::Enemy(void)
 {
+	cooldownClock.restart();
+	shootBullet = false;
+	canShootBullet = false;
 	unactivate = false;
 	hitCheck = false;
 	activated = false;
@@ -19,6 +22,10 @@ Enemy::Enemy(void)
 void Enemy::update(ActionList _actionList)
 	// Updates the enemy logic given the instructions decided in the manager.
 {
+	if (!canShootBullet && cooldownClock.getElapsedTime().asSeconds() > 0.3) {
+		canShootBullet = true;
+		cooldownClock.restart();
+	}
 	if (activated) {
 		bool onGround = false;
 		if ((GameScreen::gameMap->getMapPos(((x+3)/32), ((y+16)/32)) == 1 || GameScreen::gameMap->getMapPos(((x-13)/32), ((y+16)/32)) == 1) && ((int)y-5)/32 != ((int)y+5)/32)
@@ -28,10 +35,12 @@ void Enemy::update(ActionList _actionList)
 		// Move right
 		if (_actionList.checkAction('r')) {
 			if (!_actionList.checkAction('~')) {
-				direction = 1;
-				myTexture = textureStorage[0];
+				if (direction != 1) {
+					direction = 1;
+					myTexture = textureStorage[0];
+				}
 			}
-			if (xVelocity < 6)
+			if (xVelocity < 4)
 				xVelocity++;
 		}
 		else if (xVelocity > 0 && !(_actionList.checkAction('l') || _actionList.checkAction('r')))
@@ -40,10 +49,12 @@ void Enemy::update(ActionList _actionList)
 		// Move left
 		if (_actionList.checkAction('l')) {
 			if (!_actionList.checkAction('~')) {
-				direction = -1;
-				myTexture = textureStorage[1];
+				if (direction != -1) {
+					direction = -1;
+					myTexture = textureStorage[1];
+				}
 			}
-			if (xVelocity > -6)
+			if (xVelocity > -4)
 				xVelocity--;
 		}
 		else if (xVelocity < 0 && !(_actionList.checkAction('l') || _actionList.checkAction('r')))
@@ -51,6 +62,10 @@ void Enemy::update(ActionList _actionList)
 
 		// Jump
 		if (_actionList.checkAction(' ') && onGround && yVelocity >= 0) {
+			if (direction == 1)
+				myTexture = textureStorage[2];
+			else if (direction == -1)
+				myTexture = textureStorage[3];
 			if (_actionList.checkAction('d')) {
 				yVelocity = 9;
 				onGround = false;
@@ -58,29 +73,23 @@ void Enemy::update(ActionList _actionList)
 			else {
 				yVelocity = -8;
 				onGround = false;
-				myTexture = textureStorage[0];
 			}
 		} else if (_actionList.checkAction(' ') && !onGround && yVelocity < -6) {
 			gravity = 0.12;
 		}
 
 		// Shoot
-		/*if (_actionList.checkAction('~') && canShootBullet) {
+		if (_actionList.checkAction('~') && canShootBullet) {
 			shootBullet = true;
 			canShootBullet = false;
-			cooldownClock.restart();
 			if (direction == 1)
 				x -= 4;
 			if (direction == -1)
 				x += 4;
-		}*/
+		}
 
 		// Gravity
 		if (!onGround && yVelocity < 9) {
-			if (direction == 1)
-				myTexture = textureStorage[2];
-			if (direction == -1)
-				myTexture = textureStorage[3];
 			yVelocity += gravity;
 			gravity = 1;
 		} else if (onGround && yVelocity > 0){
@@ -163,6 +172,7 @@ bool Enemy::isActivated() {
 void Enemy::deactivate() {
 	// Returns whether the enemy has been activated or not.
 	activated = false;
+	unactivate = false;
 }
 
 void Enemy::hit(int i)
@@ -171,6 +181,21 @@ void Enemy::hit(int i)
 	hitCheck = true;
 	healthPoints -= i;
 	mySprite.setColor(sf::Color::Red);
+}
+
+float Enemy::getDirection()
+{
+	return direction;
+}
+
+bool Enemy::isShootBullet()
+{
+	return shootBullet;
+}
+
+void Enemy::clearShootBullet()
+{
+	shootBullet = false;
 }
 
 bool Enemy::checkJump()

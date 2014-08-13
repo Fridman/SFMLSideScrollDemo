@@ -4,9 +4,13 @@ class Enemy :
 	public Entity
 {
 public:
+	bool shootBullet;
+	bool canShootBullet;
 	bool unactivate;
 	void deactivate();
 	bool newActions;
+	bool isShootBullet();
+	float getDirection();
 	ActionList myActionList;
 	Enemy(void);
 	void update(ActionList _actionList) override;
@@ -19,6 +23,7 @@ public:
 	int direction;
 	float get_x();
 	float get_y();
+	void clearShootBullet();
 	~Enemy(void);
 private:
 	sf::Texture textureStorage[4];

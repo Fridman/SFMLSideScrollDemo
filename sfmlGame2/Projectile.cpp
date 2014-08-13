@@ -15,8 +15,10 @@ Projectile::Projectile()
 	reversed = false;
 }
 
-Projectile::Projectile(EnemyManager * _enemyList)
+Projectile::Projectile(EnemyManager * _enemyList, Player * _player1)
 {
+	player1 = _player1;
+	playerOrEnemy = 0;
 	enemyList = _enemyList;
 	lifeClock.restart();
 	loadImage.loadFromFile("images/entities/bullet.png");
@@ -40,14 +42,28 @@ void Projectile::update(ActionList _actionList)
 		x += 16*direction;
 	}
 	mySprite.setPosition(x, y);
-	for (int i = 0; i < 32; i++) {
-		if (IS_BETWEEN(x, enemyList->getEnemy(i)->get_x()-13, enemyList->getEnemy(i)->get_x()+13) && IS_BETWEEN(y, enemyList->getEnemy(i)->get_y()-16, enemyList->getEnemy(i)->get_y()+16)) {
-			enemyList->getEnemy(i)->hit(1);
+	if (playerOrEnemy == 0) {
+		for (int i = 0; i < 32; i++) {
+			if (!enemyList->getEnemy(i)->isActivated())
+				break;
+			if (IS_BETWEEN(x, enemyList->getEnemy(i)->get_x()-13, enemyList->getEnemy(i)->get_x()+13) && IS_BETWEEN(y, enemyList->getEnemy(i)->get_y()-16, enemyList->getEnemy(i)->get_y()+16)) {
+				enemyList->getEnemy(i)->hit(2);
+				inUse = false;
+				break;
+			}
+		}
+		if (lifeClock.getElapsedTime().asSeconds() > 1.5)
 			inUse = false;
+	} else if (playerOrEnemy == 1) {
+		if (player1 != NULL) {
+			if (IS_BETWEEN(x, player1->get_x()-13, player1->get_x()+13) && IS_BETWEEN(y, player1->get_y()-16, player1->get_y()+16)) {
+				//player1->hit(2);
+				inUse = false;
+			}
+			if (lifeClock.getElapsedTime().asSeconds() > 1.5)
+				inUse = false;
 		}
 	}
-	if (lifeClock.getElapsedTime().asSeconds() > 3)
-		inUse = false;
 }
 
 void Projectile::setDirection(int dir)
@@ -55,8 +71,9 @@ void Projectile::setDirection(int dir)
 	direction = dir;
 }
 
-void Projectile::activate(float _x, float _y, int _direction)
+void Projectile::activate(float _x, float _y, int _direction, int _playerOrEnemy)
 {
+	playerOrEnemy = _playerOrEnemy;
 	x = _x;
 	y = _y;
 	direction = _direction;
@@ -70,6 +87,11 @@ void Projectile::activate(float _x, float _y, int _direction)
 	}
 	if (direction == -1 && !reversed) {
 		mySprite.setScale(-1, 1);
+	}
+	if (playerOrEnemy == 0) {
+		mySprite.setColor(sf::Color::White);
+	} else if (playerOrEnemy == 1) {
+		mySprite.setColor(sf::Color::Green);
 	}
 	lifeClock.restart();
 }

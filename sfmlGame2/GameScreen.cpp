@@ -21,8 +21,8 @@ GameScreen::GameScreen(void)
 	gameMap->loadMap("level1.txt");
 	gameMap->drawMap();
 	_enemyManager.activate(200, 100);
-	for (int i = 0; i < 32; i++) {
-		projectileList[i] = Projectile(&_enemyManager);
+	for (int i = 0; i < 128; i++) {
+		projectileList[i] = Projectile(&_enemyManager, &player1);
 	}
 }
 
@@ -54,14 +54,23 @@ void GameScreen::update()
 	player1.update(myActionList);
 	myActionList.clearActions();
 	if (player1.isShootBullet()) {
-		for (int i = 0; i < 32; i++) {
+		for (int i = 0; i < 128; i++) {
 			if (!projectileList[i].getInUse()) {
-				projectileList[i].activate(player1.get_x()+(16 * player1.getDirection()), player1.get_y()-12 + ((rand() % 5) - 3), player1.getDirection());
+				projectileList[i].activate(player1.get_x()+(16 * player1.getDirection()), player1.get_y()-12 + ((rand() % 5) - 3), player1.getDirection(), 0);
 				break;
 			}
 		}
 	}
 	for (int i = 0; i < 32; i++) {
+		if (_enemyManager.getEnemy(i)->isShootBullet()) {
+		for (int k = 0; k < 128; k++) {
+			if (!projectileList[k].getInUse()) {
+				projectileList[k].activate(_enemyManager.getEnemy(i)->get_x()+(16 * _enemyManager.getEnemy(i)->getDirection()), _enemyManager.getEnemy(i)->get_y()-12 + ((rand() % 5) - 3), _enemyManager.getEnemy(i)->getDirection(), 1);
+				_enemyManager.getEnemy(i)->clearShootBullet();
+				break;
+			}
+		}
+		}
 		if (projectileList[i].getInUse()) {
 			projectileList[i].update(myActionList);
 
@@ -69,7 +78,8 @@ void GameScreen::update()
 	}
 	player1.clearShootBullet();
 	if (spawnTimer.getElapsedTime().asSeconds() > 10) {
-		_enemyManager.activate(rand() % 2048, 16);
+		for (int i = 0; i < rand() % 5; i++) 
+			_enemyManager.activate(rand() % 2048, 16);
 		printf("spawning dude!\n");
 		spawnTimer.restart();
 	}
@@ -95,13 +105,14 @@ void GameScreen::render(sf::RenderWindow& window)
 	window.setView(screenView);
 	window.draw(gameMap->getSprite());
 	window.draw(player1.getSprite());
-	for (int i = 0; i < 32; i++) {
+	for (int i = 128; i >= 0; i--) {
 		if (projectileList[i].getInUse()) {
 			window.draw(projectileList[i].getSprite());
 		}
-		if (_enemyManager.getEnemy(i)->isActivated()) {
-			window.draw(_enemyManager.getEnemy(i)->getSprite());
-		}
+		if (i < 32)
+			if (_enemyManager.getEnemy(i)->isActivated()) {
+				window.draw(_enemyManager.getEnemy(i)->getSprite());
+			}
 	}
 }
 

@@ -31,7 +31,7 @@ private:
 	sf::Clock spawnTimer;
 	ActionList myActionList;
 	Player player1;
-	Projectile projectileList[32];
+	Projectile projectileList[128];
 	sf::View screenView;
 	
 };

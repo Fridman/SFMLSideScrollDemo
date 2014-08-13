@@ -36,9 +36,11 @@ void Player::update(ActionList _actionList)
 	// Move right
 	if (_actionList.checkAction('r')) {
 		if (!_actionList.checkAction('~')) {
-			direction = 1;
-			tileChunk.left = 0;
-			myTexture.loadFromImage(spriteSheet, tileChunk);
+			if (direction != 1) {
+				direction = 1;
+				tileChunk.left = 0;
+				myTexture.loadFromImage(spriteSheet, tileChunk); 
+			}
 		}
 		if (xVelocity < 6)
 			xVelocity++;
@@ -49,9 +51,11 @@ void Player::update(ActionList _actionList)
 	// Move left
 	if (_actionList.checkAction('l')) {
 		if (!_actionList.checkAction('~')) {
-			direction = -1;
-			tileChunk.left = 32;
-			myTexture.loadFromImage(spriteSheet, tileChunk);
+			if (direction != -1) {
+				direction = -1;
+				tileChunk.left = 32;
+				myTexture.loadFromImage(spriteSheet, tileChunk);
+			}
 		}
 		if (xVelocity > -6)
 			xVelocity--;
@@ -61,6 +65,8 @@ void Player::update(ActionList _actionList)
 
 	// Jump
 	if (_actionList.checkAction(' ') && onGround && yVelocity >= 0) {
+		tileChunk.top = 0;
+		myTexture.loadFromImage(spriteSheet, tileChunk);
 		if (_actionList.checkAction('d')) {
 			yVelocity = 9;
 			onGround = false;
@@ -97,8 +103,6 @@ void Player::update(ActionList _actionList)
 		}
 		else if ((int)y % 32 != 0)
 			y += (32 - ((int)y % 32));
-		tileChunk.top = 0;
-		myTexture.loadFromImage(spriteSheet, tileChunk);
 	} if (GameScreen::gameMap->getMapPos(((x)/32), ((y)/32)) == -1) {
 		dead = true;
 	}
@@ -133,6 +137,7 @@ float Player::get_y()
 {
 	return y;
 }
+
 float Player::getDirection()
 {
 	return direction;

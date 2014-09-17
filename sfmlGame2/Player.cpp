@@ -5,6 +5,9 @@
 
 Player::Player(void)
 {
+	shootdir = 1;
+	hitCheck = false;
+	healthPoints = 10;
 	dead = false;
 	cooldownClock.restart();
 	shootBullet = false;
@@ -67,7 +70,7 @@ void Player::update(ActionList _actionList)
 	if (_actionList.checkAction(' ') && onGround && yVelocity >= 0) {
 		tileChunk.top = 0;
 		myTexture.loadFromImage(spriteSheet, tileChunk);
-		if (_actionList.checkAction('d')) {
+		if (_actionList.checkAction('d') && !_actionList.checkAction('~')) {
 			yVelocity = 9;
 			onGround = false;
 		}
@@ -86,10 +89,21 @@ void Player::update(ActionList _actionList)
 		shootBullet = true;
 		canShootBullet = false;
 		cooldownClock.restart();
-		if (direction == 1)
-			x -= 4;
-		if (direction == -1)
-			x += 4;
+		if (_actionList.checkAction('d')) {
+			if (!onGround)
+				y -= 4;
+			shootdir = 2;
+		} else if (_actionList.checkAction('u')) {
+			if (!onGround)
+				y += 4;
+			shootdir = -2;
+		} else {
+			shootdir = direction;
+			if (direction == 1)
+				x -= 4;
+			if (direction == -1)
+				x += 4;
+		}
 	}
 
 	// Gravity
@@ -106,7 +120,14 @@ void Player::update(ActionList _actionList)
 	} if (GameScreen::gameMap->getMapPos(((x)/32), ((y)/32)) == -1) {
 		dead = true;
 	}
-	
+	if (!hitCheck)
+		mySprite.setColor(sf::Color::White);
+	if (hitCheck)
+		hitCheck = false;
+
+	if (healthPoints <= 0) {
+		dead = true;
+	}
 	x += xVelocity;
 	y += yVelocity;
 	mySprite.setPosition(x, y);
@@ -143,9 +164,22 @@ float Player::getDirection()
 	return direction;
 }
 
+float Player::getShotDirection()
+{
+	return shootdir;
+}
+
 bool Player::isShootBullet()
 {
 	return shootBullet;
+}
+
+void Player::hit(int i)
+	// Updates the player logic for recieving damage.
+{
+	hitCheck = true;
+	healthPoints -= i;
+	mySprite.setColor(sf::Color::Red);
 }
 
 Player::~Player(void)

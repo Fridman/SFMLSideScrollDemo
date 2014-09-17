@@ -39,7 +39,11 @@ void Projectile::update(ActionList _actionList)
 		x = -1000;
 		y = -1000;
 	} else {
-		x += 16*direction;
+		if (direction % 2 != 0)
+			x += 16*direction;
+		else {
+			y += 16 * (direction / abs(direction));
+		}
 	}
 	mySprite.setPosition(x, y);
 	if (playerOrEnemy == 0) {
@@ -57,7 +61,7 @@ void Projectile::update(ActionList _actionList)
 	} else if (playerOrEnemy == 1) {
 		if (player1 != NULL) {
 			if (IS_BETWEEN(x, player1->get_x()-13, player1->get_x()+13) && IS_BETWEEN(y, player1->get_y()-16, player1->get_y()+16)) {
-				//player1->hit(2);
+				player1->hit(1);
 				inUse = false;
 			}
 			if (lifeClock.getElapsedTime().asSeconds() > 1.5)
@@ -82,10 +86,21 @@ void Projectile::activate(float _x, float _y, int _direction, int _playerOrEnemy
 	myTexture.loadFromImage(loadImage);
 	mySprite.setTexture(myTexture);
 	mySprite.setColor(sf::Color::Yellow);
-	if (direction == 1) {
+	
+	if (direction % 2 != 0) {
+		mySprite.setRotation(0);
+		y = y + (rand() % 5 - 3);
+		x += (direction * 16);
+	}
+	else {
+		mySprite.setRotation(90);
+		x = x + (rand() % 5 - 3);
+		y += (direction * 8);
+	}
+	if (direction > 0) {
 		mySprite.setScale(1, 1);
 	}
-	if (direction == -1 && !reversed) {
+	if (direction < 0 && !reversed) {
 		mySprite.setScale(-1, 1);
 	}
 	if (playerOrEnemy == 0) {

@@ -20,7 +20,6 @@ GameScreen::GameScreen(void)
 	player1.setPosition(100,100);
 	gameMap->loadMap("level1.txt");
 	gameMap->drawMap();
-	_enemyManager.activate(200, 100);
 	for (int i = 0; i < 128; i++) {
 		projectileList[i] = Projectile(&_enemyManager, &player1);
 	}
@@ -39,6 +38,8 @@ void GameScreen::getInput(sf::RenderWindow& window)
 		myActionList.appendAction('r');
 	if (KEY_DOWN)
 		myActionList.appendAction('d');
+	if (KEY_UP)
+		myActionList.appendAction('u');
 	if (KEY_SPACE)
 		myActionList.appendAction(' ');
 	if (KEY_CONTROL && ! player1.isShootBullet())
@@ -54,9 +55,10 @@ void GameScreen::update()
 	player1.update(myActionList);
 	myActionList.clearActions();
 	if (player1.isShootBullet()) {
+		int startX = 16 * player1.getDirection();
 		for (int i = 0; i < 128; i++) {
 			if (!projectileList[i].getInUse()) {
-				projectileList[i].activate(player1.get_x()+(16 * player1.getDirection()), player1.get_y()-12 + ((rand() % 5) - 3), player1.getDirection(), 0);
+				projectileList[i].activate(player1.get_x(), player1.get_y()-12, player1.getShotDirection(), 0);
 				break;
 			}
 		}

@@ -22,7 +22,7 @@ Enemy::Enemy(void)
 void Enemy::update(ActionList _actionList)
 	// Updates the enemy logic given the instructions decided in the manager.
 {
-	if (!canShootBullet && cooldownClock.getElapsedTime().asSeconds() > 0.3) {
+	if (!canShootBullet && cooldownClock.getElapsedTime().asSeconds() > 0.5) {
 		canShootBullet = true;
 		cooldownClock.restart();
 	}

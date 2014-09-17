@@ -7,6 +7,7 @@ class Player :
 {
 public:
 	Player(void);
+	void hit(int i);
 	sf::Sprite getSprite() override;
 	void update(ActionList _actionList) override;
 	void setPosition(float _x, float _y);
@@ -15,9 +16,13 @@ public:
 	float get_x();
 	float get_y();
 	float getDirection();
+	float getShotDirection();
 	bool dead;
 	~Player(void);
 private:
+	int shootdir;
+	bool hitCheck;
+	int healthPoints;
 	bool shootBullet;
 	bool canShootBullet;
 	float gravity;

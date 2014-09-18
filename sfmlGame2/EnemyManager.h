@@ -15,8 +15,10 @@ public:
 	~EnemyManager(void);
 
 private:
+	sf::Vector3f routeNodeQueue[5];
 	void unactivate(int i);
 	void aiRoutine(Enemy * _enemy);
+	bool findRoute(int _x, int _y);
 	int iUpdate;
 	Player * player1;
 	ActionList myActionList;

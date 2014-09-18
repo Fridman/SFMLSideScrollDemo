@@ -213,6 +213,11 @@ bool Enemy::checkLanding()
 		GameScreen::gameMap->getMapPos(((int)x/32), ((int)y/32)+4) == 1;
 }
 
+bool Enemy::checkPosRelative(int _x, int _y)
+{
+	return GameScreen::gameMap->getMapPos(((int)x/32)+_x, ((int)y/32)+_y) == 1;
+}
+
 Enemy::~Enemy(void)
 {
 }

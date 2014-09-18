@@ -20,6 +20,7 @@ public:
 	bool isActivated();
 	bool checkJump();
 	bool checkLanding();
+	bool checkPosRelative(int _x, int _y);
 	int direction;
 	float get_x();
 	float get_y();

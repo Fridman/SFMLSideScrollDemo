@@ -90,6 +90,40 @@ void EnemyManager::aiRoutine(Enemy * _enemy)
 	}
 }
 
+bool EnemyManager::findRoute(int _x, int _y)
+{
+	float player_x = player1->get_x();
+	float player_y = player1->get_y();
+	int enemy_x = _x;
+	int enemy_y = _y; 
+	/*if (GameScreen::gameMap->getMapPos(((enemy_x)/32), ((enemy_y+1)/32)))
+		if (findRoute(((enemy_x)/32), ((enemy_y+1)/32))) {
+			routeNodeQueue.add(((enemy_x)/32), ((enemy_y+1)/32)))
+			return true;
+		}
+
+	if (GameScreen::gameMap->getMapPos(((enemy_x-1)/32), ((enemy_y-1)/32)))
+		if (findRoute(((enemy_x-1)/32), ((enemy_y-1)/32))) {
+			routeNodeQueue.add(((enemy_x-1)/32), ((enemy_y-1)/32)))
+			return true;
+		}
+	if (GameScreen::gameMap->getMapPos(((enemy_x-1)/32), ((enemy_y+1)/32)))
+		if (findRoute(((enemy_x-1)/32), ((enemy_y+1)/32))) {
+			routeNodeQueue.add(((enemy_x-1)/32), ((enemy_y+1)/32)))
+			return true;
+		}
+	if (GameScreen::gameMap->getMapPos(((enemy_x+1)/32), ((enemy_y-1)/32)))
+		if (findRoute(((enemy_x+1)/32), ((enemy_y-1)/32))) {
+			routeNodeQueue.add(((enemy_x+1)/32), ((enemy_y-1)/32)))
+			return true;
+		}
+	if (GameScreen::gameMap->getMapPos(((enemy_x+1)/32), ((enemy_y+1)/32)))
+		if (findRoute(((enemy_x+1)/32), ((enemy_y+1)/32))) {
+			routeNodeQueue.add(((enemy_x)/32), ((enemy_y+1)/32)))
+			return true;
+		}*/
+}
+
 EnemyManager::~EnemyManager(void)
 {
 }

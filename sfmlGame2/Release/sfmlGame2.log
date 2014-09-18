@@ -1,7 +1,32 @@
-﻿Build started 13/8/2014 4:39:27 PM.
+﻿Build started 18/9/2014 12:23:22 PM.
      1>Project "C:\Users\Ben\Documents\Visual Studio 2012\Projects\sfmlGame2\sfmlGame2\sfmlGame2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\Ben\Documents\Visual Studio 2012\SFML-2.1\include" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D SFML_STATIC /D _MBCS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Projectile.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\Ben\Documents\Visual Studio 2012\SFML-2.1\include" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D SFML_STATIC /D _MBCS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp EnemyManager.cpp GameScreen.cpp MenuScreen.cpp Player.cpp Projectile.cpp
+         Enemy.cpp
+     1>Enemy.cpp(31): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Enemy.cpp(78): warning C4305: '=' : truncation from 'double' to 'float'
+     1>Enemy.cpp(97): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Enemy.cpp(107): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Enemy.cpp(188): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
+         EnemyManager.cpp
+         GameScreen.cpp
+     1>GameScreen.cpp(18): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>GameScreen.cpp(58): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>GameScreen.cpp(61): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>GameScreen.cpp(70): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>GameScreen.cpp(84): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>GameScreen.cpp(96): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>GameScreen.cpp(97): warning C4244: 'initializing' : conversion from 'const float' to 'int', possible loss of data
+     1>GameScreen.cpp(106): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>GameScreen.cpp(106): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         MenuScreen.cpp
+         Player.cpp
+     1>Player.cpp(35): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Player.cpp(84): warning C4305: '=' : truncation from 'double' to 'float'
+     1>Player.cpp(115): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Player.cpp(120): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Player.cpp(164): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
+     1>Player.cpp(169): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
          Projectile.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Ben\Documents\Visual Studio 2012\Projects\sfmlGame2\Release\SFMLPlatformDemo.exe" /NOLOGO /LIBPATH:"C:\Users\Ben\Documents\Visual Studio 2012\SFML-2.1\lib" "sfml-window-s.lib" "sfml-graphics-s.lib" "sfml-system-s.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Ben\Documents\Visual Studio 2012\Projects\sfmlGame2\Release\SFMLPlatformDemo.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /ENTRY:"mainCRTStartup" /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Ben\Documents\Visual Studio 2012\Projects\sfmlGame2\Release\SFMLPlatformDemo.lib" /MACHINE:X86 /SAFESEH Release\ActionList.obj
@@ -24,4 +49,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.62
+Time Elapsed 00:00:09.72

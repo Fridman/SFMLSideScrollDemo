@@ -70,7 +70,7 @@ void Player::update(ActionList _actionList)
 	if (_actionList.checkAction(' ') && onGround && yVelocity >= 0) {
 		tileChunk.top = 0;
 		myTexture.loadFromImage(spriteSheet, tileChunk);
-		if (_actionList.checkAction('d') && !_actionList.checkAction('~')) {
+		if (_actionList.checkAction('d')/* && !_actionList.checkAction('~')*/) {
 			yVelocity = 9;
 			onGround = false;
 		}
@@ -89,7 +89,7 @@ void Player::update(ActionList _actionList)
 		shootBullet = true;
 		canShootBullet = false;
 		cooldownClock.restart();
-		if (_actionList.checkAction('d')) {
+		/*if (_actionList.checkAction('d')) {
 			if (!onGround)
 				y -= 4;
 			shootdir = 2;
@@ -97,13 +97,13 @@ void Player::update(ActionList _actionList)
 			if (!onGround)
 				y += 4;
 			shootdir = -2;
-		} else {
+		} else {*/
 			shootdir = direction;
 			if (direction == 1)
 				x -= 4;
 			if (direction == -1)
 				x += 4;
-		}
+		//}
 	}
 
 	// Gravity
